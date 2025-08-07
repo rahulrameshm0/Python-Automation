@@ -21,3 +21,18 @@ def test_UIValidationDynamicScript(page:Page):
     page.get_by_text('Checkout').click()
     expect(page.locator('.media-body')).to_have_count(2)
     time.sleep(6)
+
+
+def test_childWindowHandle(page : Page):
+    page.goto('https://rahulshettyacademy.com/loginpagePractise/')
+
+    with (page.expect_popup() as newPage_info):
+        page.locator('.blinkingText').click()
+        childPage = newPage_info.value
+        text = childPage.locator('.red').text_content()
+        print(text)
+        words = text.split('at')
+        email = words[1].strip().split(" ")[0]
+
+        assert email == 'mentor@rahulshettyacademy.com'
+        time.sleep(6)
