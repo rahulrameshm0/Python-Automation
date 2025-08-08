@@ -13,6 +13,10 @@ def test_UIChecks(page:Page):
     page.on('dialog', lambda dialog: dialog.accept())
     page.get_by_role('button', name='Confirm').click()
 
+    # mouse hover
+    page.locator('#mousehover').hover()
+    page.get_by_role('link', name='Top').click()
+
     # Frame handling
     page_frame = page.frame_locator('#courses-iframe')
     page_frame.get_by_role('link', name='All Access plan').click()
@@ -31,6 +35,5 @@ def test_UIChecks(page:Page):
             break
 
     rice_row = page.locator('tr').filter(has_text='Rice')
-    if rice_row == page.locator('td'):
-        print(rice_row)
+    expect(rice_row.locator('td').nth(price_value)).to_have_text('37')
     time.sleep(5)
